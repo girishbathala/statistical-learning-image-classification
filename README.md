@@ -27,11 +27,10 @@ is the zigzag and dct transformed training data vector of sample images. By usin
 estimationwe obtain an estimate of the mean for the class-conditionals of the two classes PXjY (x|cheetah)
 and PXjY (x|grass):
 
+![](readme_data/mu_mle.JPG)
+
 where, X is the feature matrix and n is the number of training samples.
 Similarly we obtain the estimate of the variance :
-
-
-
 
 where x is the feature vector and n is the number of training examples.
 The transformation matrix A = [0 ... i ... 0 ] is applied the CCD to obtain the marginal distribution,
