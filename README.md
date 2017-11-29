@@ -11,11 +11,8 @@ The goal is to segment the “cheetah” image (shown below in the left) into it
 ## Data pre-processing
 
 To formulate this as a pattern recognition problem, we need to decide on an observation space. Here
-we will be using the space of 8×8 image blocks, i.e. we view each image as a collection of 8×8 blocks.
-For each block we compute the discrete cosine transform (function dct2 on MATLAB) and obtain
-an array of 8 × 8 frequency coefficients. We do this because the cheetah and the grass have different
-textures, with different frequency decompositions and the two classes should be better separated in the
-frequency domain.
+the space of 8×8 image blocks is used as the obs. space, i.e. each image is viewed as a collection of 8×8 blocks.
+For each block the discrete cosine transform (function dct2 on MATLAB) is computed and an array of 8 × 8 frequency coefficients is obtained. Because the cheetah and the grass have different textures with different frequency decompositions, the two classes should be better separated in the frequency domain.
 
 The file data/train/TrainingSamplesDCT_8.mat contains a training set of vectors obtained from a similar image (stored as a matrix, each row is a training vector) for each of the classes. There are two matrices, TrainsampleDCT BG and TrainsampleDCT FG for foreground
 and background samples respectively
@@ -27,10 +24,12 @@ is the zigzag and dct transformed training data vector of sample images. By usin
 estimationwe obtain an estimate of the mean for the class-conditionals of the two classes PXjY (x|cheetah)
 and PXjY (x|grass):
 
-![](readme_data/mu_mle.JPG)
+![](readme_images/mu_mle.JPG)
 
 where, X is the feature matrix and n is the number of training samples.
 Similarly we obtain the estimate of the variance :
+
+![](readme_images/sigma_mle.JPG)
 
 where x is the feature vector and n is the number of training examples.
 The transformation matrix A = [0 ... i ... 0 ] is applied the CCD to obtain the marginal distribution,
@@ -43,11 +42,18 @@ rule.
 
 ![](https://latex.codecogs.com/gif.latex?\[i(x)^*&space;=&space;\arg\max_i&space;P_{X|Y}&space;(x|i)&space;*&space;P_Y&space;(i)\])
 
-![](https://latex.codecogs.com/gif.latex?\[\mu\])
-
-
 Therefore, for a given input feature vector x, the value the class i ( cheetah or grass) which maximizes the
 above equation is chosen as the output class. Accordingly the pixel value is coded as ’1’ (FG) or ’0’(BG).
+
+For a multivariate gaussian distribution the solution to the above equation is given as :
+![](readme_images/mahalanobis_mle.JPG)
+![](readme_images/alpha_mle.JPG)
+
+where di(x; y) is the mahalanobis distance and alpha_i is a constant.
+
+### Note : Single Feature Case
+To make the task of estimating the class conditional densities easier, each vector observation x is reduced to a scalar. 
+For this, for each vector, we compute the index (position within the vector) of the coefficient that has the 2nd largest energy value (absolute value). This is our observation or feature X. (The reason we do not use the coefficient with the largest energy is that it is always the so-called “DC” coefficient, which contains the mean of the block).
 
 
 
