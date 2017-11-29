@@ -20,13 +20,35 @@ frequency domain.
 The file data/train/TrainingSamplesDCT_8.mat contains a training set of vectors obtained from a similar image (stored as a matrix, each row is a training vector) for each of the classes. There are two matrices, TrainsampleDCT BG and TrainsampleDCT FG for foreground
 and background samples respectively
 
+## Class Conditional and Marginal Distributions
+The two classes are the foreground (cheetah) and the background(grass). [x = x1 , x2, ... , xm] are the
+m features in the feature matrix X , where each m is the number of features and is equal to 64. Each x
+is the zigzag and dct transformed training data vector of sample images. By using maximum likelihood
+estimationwe obtain an estimate of the mean for the class-conditionals of the two classes PXjY (x|cheetah)
+and PXjY (x|grass):
+
+where, X is the feature matrix and n is the number of training samples.
+Similarly we obtain the estimate of the variance :
+
+
+
+
+where x is the feature vector and n is the number of training examples.
+The transformation matrix A = [0 ... i ... 0 ] is applied the CCD to obtain the marginal distribution,
+where i=1 at the appropriate index of the 64 features to obtain the respective marginal densities
 ## Baye's Decision Rule
 
 The Bayesian Decision Rule states the we have to pick the class i which minimizes the Risk associated
 by picking the class.For the “0-1” loss the optimal decision rule is the maximum a-posteriori probability
 rule.
 
+![](https://latex.codecogs.com/gif.latex?\[i(x)^*&space;=&space;\arg\max_i&space;P_{X|Y}&space;(x|i)&space;*&space;P_Y&space;(i)\])
 
-Therefore, for a given input feature x, the value the class i ( cheetah or grass) which maximizes the
+![](https://latex.codecogs.com/gif.latex?\[\mu\])
+
+
+Therefore, for a given input feature vector x, the value the class i ( cheetah or grass) which maximizes the
 above equation is chosen as the output class. Accordingly the pixel value is coded as ’1’ (FG) or ’0’(BG).
+
+
 
