@@ -51,9 +51,11 @@ For a multivariate gaussian distribution the solution to the above equation is g
 
 where di(x; y) is the mahalanobis distance and alpha_i is a constant.
 
-### Note : Single Feature Case
+### Single Feature Case
 To make the task of estimating the class conditional densities easier, each vector observation x is reduced to a scalar. 
 For this, for each vector, we compute the index (position within the vector) of the coefficient that has the 2nd largest energy value (absolute value). This is our observation or feature X. (The reason we do not use the coefficient with the largest energy is that it is always the so-called “DC” coefficient, which contains the mean of the block).
 
+### Multi-Feature Case
+The 64 DCT coefficients in each image block are used as features. Note that the in the single feature case absolute value of the DCT coefficients were used but in this case the DCT coefficients are used directly.
 
 
